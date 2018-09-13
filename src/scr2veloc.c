@@ -24,13 +24,13 @@ static int rank      = MPI_PROC_NULL;
 static char current_name[1024];
 static int  current_version = -1;
 
-void set_name(int id, const char* name)
+static void set_name(int id, const char* name)
 {
   kvtree* names = kvtree_set_kv_int(scr2veloc_name_map, "ID", id);
   kvtree_util_set_str(names, "NAME", name);
 }
 
-char* get_name(int id)
+static char* get_name(int id)
 {
   char* name = NULL;
   const kvtree* names = kvtree_get_kv_int(scr2veloc_name_map, "ID", id);
