@@ -15,21 +15,33 @@ static char SCR2VELOC_NAME[]      = "scr.dataset";
 static int  SCR2VELOC_MAX_VERSION = INT_MAX;
 static char SCR2VELOC_VERSION[]   = "scr2veloc-v1.0";
 
+// map and path to map file for storing map of veloc checkpoint id
+// to scr dataset name, e.g.,
+// ID
+//   5
+//     NAME
+//       scr.dataset.5
+//   6
+//     NAME
+//       scr.dataset.6
 static char*   scr2veloc_name_path = NULL;
 static kvtree* scr2veloc_name_map  = NULL;
 
+// dup of MPI_COMM_WORLD and our rank within that communicator
 static MPI_Comm comm = MPI_COMM_NULL;
 static int rank      = MPI_PROC_NULL;
 
-static char current_name[1024];
-static int  current_version = -1;
+// keeps track of current veloc checkpoint id
+static int current_version = -1;
 
+// add map entry for given veloc checkpoint id and SCR dataset name
 static void set_name(int id, const char* name)
 {
   kvtree* names = kvtree_set_kv_int(scr2veloc_name_map, "ID", id);
   kvtree_util_set_str(names, "NAME", name);
 }
 
+// return SCR dataset name corresponding to veloc checkpoint id
 static char* get_name(int id)
 {
   char* name = NULL;
@@ -105,7 +117,7 @@ int SCR_Route_file(const char* name, char* file)
 
 int SCR_Have_restart(int* flag, char* name)
 {
-  // TODO: need to record map from veloc id to name user wanted
+  // check whether we have a checkpoint to restart from
   int rc = VELOC_Restart_test(SCR2VELOC_NAME, SCR2VELOC_MAX_VERSION);
   if (rc == VELOC_FAILURE) {
     // nothing found
@@ -145,7 +157,7 @@ int SCR_Complete_restart(int valid)
 
 int SCR_Need_checkpoint(int* flag)
 {
-  // TODO: no way to determine this from veloc anymore?
+  // TODO: no way to determine whether to checkpoint from veloc?
   // just assume always true for now
   *flag = 1;
   return SCR_SUCCESS;
@@ -157,6 +169,7 @@ int SCR_Start_checkpoint(void)
   current_version++;
 
   // didn't get a name from user, so make one up
+  // use same naming convention as traditional scr library: scr.dataset.10
   char ckptname[VELOC_MAX_NAME];
   snprintf(ckptname, VELOC_MAX_NAME, "%s.%d", SCR2VELOC_NAME, current_version);
 
@@ -209,7 +222,7 @@ char* SCR_Get_version(void)
 
 int SCR_Should_exit(int* flag)
 {
-  // TODO: no way to know in veloc?
+  // TODO: no way to know whether to exit in veloc?
   *flag = 0;
   return SCR_SUCCESS;
 }
