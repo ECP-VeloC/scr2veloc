@@ -64,6 +64,12 @@ int SCR_Init(void)
 
   // path to veloc config file
   const char* config = getenv("SCR2VELOC_CONFIG");
+  if (config == NULL) {
+    if (rank == 0) {
+      printf("scr2veloc: ERROR: must set SCR2VELOC_CONFIG to point to VELOC config file\n");
+    }
+    MPI_Abort(comm, -1);
+  }
 
   // start up veloc
   int rc = VELOC_Init(comm, config);
