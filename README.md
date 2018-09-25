@@ -54,7 +54,7 @@ Copyright (c) 2018, UChicago Argonne LLC, operator of Argonne National Laborator
 Copyright (c) 2018, Lawrence Livermore National Security, LLC.
 Produced at the Lawrence Livermore National Laboratory.
 
-For release details and restrictions, please read the [LICENSE](https://github.com/ECP-VeloC/VELOC/blob/master/LICENSE) 
-and [NOTICE](https://github.com/ECP-VeloC/VELOC/blob/master/NOTICE) files.
+For release details and restrictions, please read the [LICENSE](https://github.com/ECP-VeloC/scr2veloc/blob/master/LICENSE) 
+and [NOTICE](https://github.com/ECP-VeloC/scr2veloc/blob/master/NOTICE) files.
 
 `LLNL-CODE-751725` `OCEC-18-060`
