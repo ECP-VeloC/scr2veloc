@@ -2,7 +2,7 @@
 Library to translate SCR calls to VELOC calls.
 This installs the scr.h header and libscr files.
 
-# Build scr2veloc library
+## Build scr2veloc library
 Requires path to veloc install.
 
     #!/bin/bash
@@ -21,7 +21,7 @@ Requires path to veloc install.
 
     make install
 
-# Build SCR example programs linked to scr2veloc
+## Build SCR example programs linked to scr2veloc
 Copy the examples from the install location:
 
     #!/bin/bash
@@ -29,7 +29,7 @@ Copy the examples from the install location:
     cd examples
     make
 
-# Run SCR examples
+## Run SCR examples
 Create a veloc config file, e.g.,:
 
     >>: cat veloc.config
@@ -47,3 +47,14 @@ be written/read that records the mapping of SCR output name to VELOC checkpoint 
     export SCR2VELOC_CONFIG="veloc.config"
     export SCR2VELOC_NAMES="scrnames.kvtree"
     srun -n2 -N1 ./test_api
+
+## Release
+
+Copyright (c) 2018, UChicago Argonne LLC, operator of Argonne National Laboratory <br>
+Copyright (c) 2018, Lawrence Livermore National Security, LLC.
+Produced at the Lawrence Livermore National Laboratory.
+
+For release details and restrictions, please read the [LICENSE](https://github.com/ECP-VeloC/VELOC/blob/master/LICENSE) 
+and [NOTICE](https://github.com/ECP-VeloC/VELOC/blob/master/NOTICE) files.
+
+`LLNL-CODE-751725` `OCEC-18-060`
